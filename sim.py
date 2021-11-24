@@ -148,6 +148,9 @@ class RV32ICore:
       if op == Operation.LUI:
         self.regs[rd] = imm_u
 
+      elif op == Operation.AUIPC:
+        self.regs[rd] = self.pc + imm_u
+
       elif op == Operation.ARITH:
         if funct3 == Funct3.ADD and Funct7(funct7) == Funct7.DEFAULT:
           self.regs[rd] = self.regs[rs1] + self.regs[rs2]
@@ -286,7 +289,7 @@ if __name__ == "__main__":
   
 
   tests_path = sys.argv[1]
-  for task in ["task1", "task2", "task3"]:
+  for task in ["task1", "task2", "task3", "task4"]:
     print("=" * 16 + f" {task} " + "=" * 16)
     task_path = os.path.join(tests_path, task)
     files = os.listdir(task_path)
